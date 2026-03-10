@@ -7,6 +7,7 @@ resource "aws_instance" "probe" {
   ami           = var.ec2_ami
   instance_type = var.ec2_instance_type
   key_name      = var.ssh_key
+  vpc_security_group_ids = [aws_security_group.probe_sg.id]
 
   provisioner "file" {
     source      = "docker-compose.yml"
@@ -37,8 +38,6 @@ resource "aws_instance" "probe" {
       host = self.public_ip
       timeout = "2m"
     }
-
-
   
 }
 
