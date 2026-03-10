@@ -3,6 +3,12 @@ provider "aws" {
   region = "ap-south-1"
 }
 
+data "aws_vpc" "default" {
+  default = true
+}
+
+
+
 resource "aws_instance" "probe" {
   ami           = var.ec2_ami
   instance_type = var.ec2_instance_type
