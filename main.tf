@@ -17,25 +17,25 @@ resource "aws_instance" "probe" {
 
   provisioner "file" {
     source      = "docker-compose.yml"
-    destination = "/home/ubuntu/docker-compose.yml"
+    destination = "/home/ec2-user/docker-compose.yml"
   }
 
   provisioner "file" {
     source      = "setup.sh"
-    destination = "/home/ubuntu/setup.sh"
+    destination = "/home/ec2-user/setup.sh"
   }
 
   provisioner "file" {
     source      = ".env"
-    destination = "/home/ubuntu/.env"
+    destination = "/home/ec2-user/.env"
   }
 
    provisioner "remote-exec" {
         inline = [
         "echo 'Starting setup...'",
-        "sed -i 's/\\r$//' /home/ubuntu/setup.sh",
-        "chmod +x /home/ubuntu/setup.sh",
-        "sudo /home/ubuntu/setup.sh"
+        "sed -i 's/\\r$//' /home/ec2-user/setup.sh",
+        "chmod +x /home/ec2-user/setup.sh",
+        "sudo /home/ec2-user/setup.sh"
         ]
     }
 
@@ -43,7 +43,7 @@ resource "aws_instance" "probe" {
 
     connection {
       type = "ssh"
-      user = "ubuntu"
+      user = "ec2-user"
       private_key = file("probe-ssh.pem")
       host = self.public_ip
       timeout = "2m"
