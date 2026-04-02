@@ -32,10 +32,14 @@ resource "aws_instance" "probe" {
 
    provisioner "remote-exec" {
         inline = [
+        "echo 'Starting setup...'",
+        "sed -i 's/\\r$//' /home/ubuntu/setup.sh",
         "chmod +x /home/ubuntu/setup.sh",
         "sudo /home/ubuntu/setup.sh"
         ]
     }
+
+    
 
     connection {
       type = "ssh"
